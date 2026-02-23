@@ -1,7 +1,12 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
-
+    <main className="relative min-h-screen bg-black text-white overflow-hidden">
+      {/* Cosmic Background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.25),transparent_40%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(168,85,247,0.25),transparent_40%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black" />
+        </div>
       {/* NAVBAR */}
       <nav className="flex justify-between items-center px-10 py-6 max-w-7xl mx-auto">
         <div className="text-2xl font-bold tracking-tight">
