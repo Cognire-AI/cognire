@@ -1,47 +1,91 @@
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-black text-white flex items-center justify-center px-6 overflow-hidden">
-      
-      {/* Subtle background glow */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-500/10 blur-3xl opacity-60" />
+    <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black text-white">
 
-      <div className="max-w-5xl w-full text-center rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl px-12 py-20 shadow-[0_0_80px_rgba(0,0,0,0.6)]">
-        
-        {/* Brand */}
-        <div className="mb-6">
-          <span className="text-sm tracking-widest uppercase text-white/50">
-            COGNIRE AI
-          </span>
+      {/* NAVBAR */}
+      <nav className="flex justify-between items-center px-10 py-6 max-w-7xl mx-auto">
+        <div className="text-2xl font-bold tracking-tight">
+          Cognire<span className="text-blue-500">AI</span>
         </div>
 
-        {/* Headline */}
-        <h1 className="text-6xl md:text-7xl font-bold leading-tight bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-          Your Resume. Engineered for Interviews.
-        </h1>
-
-        {/* Subheadline */}
-        <p className="mt-8 text-xl text-white/60 max-w-3xl mx-auto leading-relaxed">
-          Cognire uses advanced AI to analyze your CV against real job descriptions, 
-          detect hidden skill gaps, optimize for ATS systems, and generate recruiter-ready rewrites in seconds.
-        </p>
-
-        {/* CTA */}
-        <div className="mt-12 flex justify-center gap-6">
+        <div className="hidden md:flex items-center gap-8 text-sm text-zinc-400">
+          <a href="#">Features</a>
+          <a href="#">How It Works</a>
+          <a href="#">Pricing</a>
+          <a href="/auth/login">Login</a>
           <a
             href="/dashboard"
-            className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 text-black font-semibold text-lg hover:opacity-90 transition-all"
+            className="bg-gradient-to-r from-cyan-500 to-purple-600 px-5 py-2 rounded-lg text-white font-medium"
           >
             Get Started
           </a>
+        </div>
+      </nav>
+
+      {/* HERO SECTION */}
+      <section className="flex flex-col items-center text-center px-6 mt-20">
+
+        <h1 className="text-6xl md:text-7xl font-bold leading-tight bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-transparent bg-clip-text">
+          AI That Turns Your Resume Into Interviews.
+        </h1>
+
+        <p className="mt-8 max-w-3xl text-lg text-zinc-400">
+          Cognire uses advanced AI to analyze your CV against real job descriptions,
+          uncover hidden skill gaps, optimize for ATS systems, and generate
+          recruiter-ready rewrites in seconds.
+        </p>
+
+        <div className="mt-10 flex gap-6">
+          <a
+            href="/dashboard"
+            className="bg-gradient-to-r from-cyan-500 to-purple-600 px-8 py-4 rounded-xl text-lg font-medium shadow-lg hover:opacity-90 transition"
+          >
+            Get Started Free
+          </a>
 
           <a
-            href="/auth/login"
-            className="px-8 py-4 rounded-xl border border-white/20 text-white text-lg hover:border-white/40 transition-all"
+            href="/dashboard"
+            className="border border-zinc-700 px-8 py-4 rounded-xl text-lg hover:border-zinc-500 transition"
           >
-            Login
+            Analyze My Resume
           </a>
         </div>
-      </div>
+      </section>
+
+      {/* FEATURE CARDS */}
+      <section className="mt-28 px-6 max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+
+        <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl">
+          <h3 className="text-xl font-semibold mb-4">Resume Intelligence</h3>
+          <p className="text-zinc-400 text-sm">
+            AI-powered resume analysis with ATS scoring, keyword optimization,
+            and recruiter-ready rewrites.
+          </p>
+        </div>
+
+        <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl">
+          <h3 className="text-xl font-semibold mb-4">Job Match AI</h3>
+          <p className="text-zinc-400 text-sm">
+            Compare your CV against real job descriptions and receive
+            match percentages with actionable insights.
+          </p>
+        </div>
+
+        <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl">
+          <h3 className="text-xl font-semibold mb-4">Interview AI</h3>
+          <p className="text-zinc-400 text-sm">
+            Practice mock interviews powered by AI with tailored questions
+            based on your resume and target role.
+          </p>
+        </div>
+
+      </section>
+
+      {/* FOOTER STRIP */}
+      <section className="mt-24 text-center text-zinc-500 text-sm pb-16">
+        Empowering your career journey with AI precision.
+      </section>
+
     </main>
   );
 }
