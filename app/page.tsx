@@ -1,3 +1,4 @@
+import FeatureCarousel from "@/components/FeatureCarousel";
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-black text-white overflow-hidden">
@@ -57,33 +58,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURE CARDS */}
-      <section className="mt-28 px-6 max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-
-        <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl">
-          <h3 className="text-xl font-semibold mb-4">Resume Intelligence</h3>
-          <p className="text-zinc-400 text-sm">
-            AI-powered resume analysis with ATS scoring, keyword optimization,
-            and recruiter-ready rewrites.
-          </p>
-        </div>
-
-        <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl">
-          <h3 className="text-xl font-semibold mb-4">Job Match AI</h3>
-          <p className="text-zinc-400 text-sm">
-            Compare your CV against real job descriptions and receive
-            match percentages with actionable insights.
-          </p>
-        </div>
-
-        <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl">
-          <h3 className="text-xl font-semibold mb-4">Interview AI</h3>
-          <p className="text-zinc-400 text-sm">
-            Practice mock interviews powered by AI with tailored questions
-            based on your resume and target role.
-          </p>
-        </div>
-
+      {/* FEATURE CAROUSEL */}
+      <section className="mt-28 px-6">
+        <FeatureCarousel />
       </section>
 
       {/* FOOTER STRIP */}
