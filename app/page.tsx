@@ -38,10 +38,10 @@ export default function Home() {
     <main className="relative min-h-screen bg-black text-white overflow-hidden">
 
       {/* COSMIC BACKGROUND */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute w-[900px] h-[900px] bg-purple-700/20 blur-[200px] rounded-full top-[-300px] right-[-300px]" />
-        <div className="absolute w-[900px] h-[900px] bg-cyan-500/20 blur-[200px] rounded-full bottom-[-300px] left-[-300px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black" />
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.25),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(168,85,247,0.25),transparent_50%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black" />
       </div>
 
       {/* NAVBAR */}
@@ -94,9 +94,8 @@ export default function Home() {
       </section>
 
       {/* REAL CAROUSEL */}
-      <section className="relative mt-32 flex justify-center items-center h-[350px]">
-
-        <div className="relative w-full max-w-6xl flex justify-center items-center">
+      <section className="relative mt-16 flex justify-center">
+        <div className="relative w-full max-w-7xl flex items-center justify-center overflow-visible">
 
           {features.map((feature, index) => {
 
