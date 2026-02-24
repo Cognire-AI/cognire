@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
+import { createClient } from "@/lib/supabaseClient";
 import { ReactNode } from "react";
 
 export default function DashboardShell({
@@ -10,8 +10,9 @@ export default function DashboardShell({
 }: {
   children: ReactNode;
 }) {
-  const pathname = usePathname();
-  const router = useRouter();
+const pathname = usePathname();
+const router = useRouter();
+const supabase = createClient();
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard" },
