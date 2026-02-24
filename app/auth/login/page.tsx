@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-/*
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -25,38 +25,19 @@ export default function LoginPage() {
 
     if (error) {
       setMessage(error.message);
-    } else {
-      router.push("/dashboard");
+      setLoading(false);
+      return;
     }
 
-    setLoading(false);
-  }
-*/
-//Temp Start
-async function handleLogin(e: React.FormEvent) {
-  e.preventDefault();
-  setLoading(true);
-  setMessage("");
+    // 🔥 VERY IMPORTANT: force session sync
+    await supabase.auth.getSession();
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  console.log("LOGIN DATA:", data);
-  console.log("LOGIN ERROR:", error);
-
-  if (error) {
-    setMessage(error.message);
-  } else {
-    console.log("Redirecting to dashboard...");
-    /*router.push("/dashboard");*/
-    alert("LOGIN SUCCESS");//temp
+    // Small delay to ensure cookie propagation
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 300);
   }
 
-  setLoading(false);
-}
-//Temp End
   return (
     <main className="min-h-screen flex items-center justify-center bg-black text-white px-6">
       <form
@@ -67,6 +48,8 @@ async function handleLogin(e: React.FormEvent) {
 
         <input
           type="email"
+          name="email"
+          autoComplete="email"
           placeholder="Email"
           required
           className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700"
@@ -76,6 +59,8 @@ async function handleLogin(e: React.FormEvent) {
 
         <input
           type="password"
+          name="password"
+          autoComplete="current-password"
           placeholder="Password"
           required
           className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700"
