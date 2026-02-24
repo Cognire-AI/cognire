@@ -50,7 +50,8 @@ async function handleLogin(e: React.FormEvent) {
     setMessage(error.message);
   } else {
     console.log("Redirecting to dashboard...");
-    router.push("/dashboard");
+    /*router.push("/dashboard");*/
+    alert("LOGIN SUCCESS");//temp
   }
 
   setLoading(false);
