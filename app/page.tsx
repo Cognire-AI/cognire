@@ -51,7 +51,7 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section className="flex flex-col items-center text-center px-6 mt-16">
+      <section className="flex flex-col items-center text-center px-6 mt-12">
         <h1 className="text-6xl md:text-7xl font-bold leading-tight bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-transparent bg-clip-text">
           AI That Turns Your Resume Into Interviews.
         </h1>
@@ -62,7 +62,7 @@ export default function Home() {
           and generate recruiter-ready rewrites in seconds.
         </p>
 
-        <div className="mt-8 flex gap-6">
+        <div className="mt-6 flex gap-6">
           <a
             href="/dashboard"
             className="bg-gradient-to-r from-cyan-500 to-purple-600 px-8 py-4 rounded-xl text-lg font-medium shadow-xl hover:opacity-90 transition"
@@ -79,54 +79,63 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TRUE 5-LAYER DEPTH CAROUSEL */}
-      <section className="relative mt-20 flex justify-center">
-        <div className="relative w-full max-w-7xl h-[420px] flex items-center justify-center">
+{/* TRUE SYMMETRICAL 5-LAYER DEPTH CAROUSEL */}
+<section className="relative mt-12 flex justify-center">
+  <div className="relative w-full max-w-7xl h-[380px] flex items-center justify-center">
 
-          {features.map((feature, index) => {
-            const position =
-              (index - active + features.length) % features.length;
+    {features.map((feature, index) => {
 
-            let transformStyle = "";
+      const offset = index - active;
+      const total = features.length;
 
-            if (position === 0) {
-              transformStyle =
-                "translate-x-0 scale-110 opacity-100 z-30";
-            } else if (position === 1) {
-              transformStyle =
-                "translate-x-[260px] scale-95 opacity-80 z-20";
-            } else if (position === 4) {
-              transformStyle =
-                "-translate-x-[260px] scale-95 opacity-80 z-20";
-            } else if (position === 2) {
-              transformStyle =
-                "translate-x-[520px] scale-75 opacity-40 z-10";
-            } else {
-              transformStyle =
-                "-translate-x-[520px] scale-75 opacity-40 z-10";
-            }
+      // normalize offset to circular range (-2 → 2)
+      const position =
+        ((offset + total + Math.floor(total / 2)) % total) -
+        Math.floor(total / 2);
 
-            return (
-              <div
-                key={index}
-                className={`absolute w-[320px] p-8 rounded-3xl text-center
-                backdrop-blur-2xl border border-white/10
-                bg-gradient-to-br from-white/5 to-white/[0.02]
-                shadow-[0_0_80px_rgba(0,255,255,0.05)]
-                transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-                ${transformStyle}`}
-              >
-                <h3 className="text-xl font-semibold mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-zinc-400">
-                  {feature.desc}
-                </p>
-              </div>
-            );
-          })}
+      let style = "";
+
+      switch (position) {
+        case 0:
+          style = "translate-x-0 scale-110 opacity-100 z-30";
+          break;
+        case 1:
+          style = "translate-x-[260px] scale-95 opacity-80 z-20";
+          break;
+        case -1:
+          style = "-translate-x-[260px] scale-95 opacity-80 z-20";
+          break;
+        case 2:
+          style = "translate-x-[520px] scale-75 opacity-40 z-10";
+          break;
+        case -2:
+          style = "-translate-x-[520px] scale-75 opacity-40 z-10";
+          break;
+        default:
+          style = "opacity-0 pointer-events-none";
+      }
+
+      return (
+        <div
+          key={index}
+          className={`absolute w-[320px] p-8 rounded-3xl text-center
+          backdrop-blur-2xl border border-white/10
+          bg-gradient-to-br from-white/5 to-white/[0.02]
+          shadow-[0_0_80px_rgba(0,255,255,0.05)]
+          transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+          ${style}`}
+        >
+          <h3 className="text-xl font-semibold mb-4">
+            {feature.title}
+          </h3>
+          <p className="text-sm text-zinc-400">
+            {feature.desc}
+          </p>
         </div>
-      </section>
+      );
+    })}
+  </div>
+</section>
 
       <section className="mt-24 text-center text-zinc-500 text-sm pb-16">
         Empowering your career journey with AI precision.
