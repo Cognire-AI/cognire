@@ -16,16 +16,22 @@ export async function POST(req: Request) {
       );
     }
 
-    const prompt = `
+const prompt = `
 You are an expert ATS (Applicant Tracking System).
 
 Analyze the resume against the job description.
 
-Return:
-1. ATS Score out of 100
-2. Key missing skills
-3. Improvement suggestions
-4. Rewritten professional summary
+Return STRICT JSON in this exact format:
+
+{
+  "ats_score": number,
+  "missing_skills": string[],
+  "suggestions": string[],
+  "professional_summary": string
+}
+
+DO NOT include any explanation text.
+ONLY return valid JSON.
 
 Resume:
 ${resume}
@@ -40,9 +46,20 @@ ${jobDescription}
       temperature: 0.7,
     });
 
-    return NextResponse.json({
-      result: response.choices[0].message.content,
-    });
+const content = response.choices[0].message.content;
+
+let parsed;
+
+try {
+  parsed = JSON.parse(content!);
+} catch (err) {
+  return NextResponse.json(
+    { error: "AI response parsing failed", raw: content },
+    { status: 500 }
+  );
+}
+
+return NextResponse.json(parsed);
   } catch (error) {
     return NextResponse.json(
       { error: "Something went wrong" },
