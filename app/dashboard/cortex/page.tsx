@@ -81,40 +81,77 @@ export default function CortexPage() {
           )}
 
           {result && !result.error && (
-            <div className="space-y-6">
+            <div className="space-y-8">
 
-              <div>
-                <h3 className="text-xl font-semibold text-indigo-400">
-                  Overall Score: {result.overall_score}
+                {/* Cortex Narrative */}
+                <div className="bg-white/5 border border-indigo-400/20 rounded-2xl p-6 backdrop-blur-xl">
+                <h3 className="text-sm uppercase tracking-wider text-indigo-400 mb-4">
+                    Cortex Strategic Brief
                 </h3>
-                <p className="text-white/60 mt-2">
-                  Role Detected: {result.role_detected}
+                <p className="text-white/80 leading-relaxed whitespace-pre-line">
+                    {result.cortex_narrative}
                 </p>
-                <p className="text-white/60">
-                  Career Level: {result.career_level_detected}
-                </p>
-              </div>
+                </div>
 
-              <div>
-                <h4 className="font-medium text-white">Strengths</h4>
-                <ul className="list-disc list-inside text-white/70 text-sm">
-                  {result.strengths?.map((s: string, i: number) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </div>
+                {/* Core Metrics */}
+                <div className="grid grid-cols-2 gap-6 text-sm">
 
-              <div>
-                <h4 className="font-medium text-white">Improvement Areas</h4>
-                <ul className="list-disc list-inside text-white/70 text-sm">
-                  {result.improvement_areas?.map((s: string, i: number) => (
+                <div>
+                    <p className="text-white/50">Overall Alignment</p>
+                    <p className="text-2xl font-semibold text-indigo-400">
+                    {result.overall_score}
+                    </p>
+                </div>
+
+                <div>
+                    <p className="text-white/50">Role Detected</p>
+                    <p className="text-white">{result.role_detected}</p>
+                </div>
+
+                <div>
+                    <p className="text-white/50">Career Level</p>
+                    <p className="text-white">{result.career_level_detected}</p>
+                </div>
+
+                <div>
+                    <p className="text-white/50">JD Match</p>
+                    <p className="text-white">{result.jd_match_score}</p>
+                </div>
+
+                </div>
+
+                {/* Strengths */}
+                <div>
+                <h4 className="text-indigo-400 mb-3">Positioning Strengths</h4>
+                <ul className="list-disc list-inside text-white/70 text-sm space-y-1">
+                    {result.strengths?.map((s: string, i: number) => (
                     <li key={i}>{s}</li>
-                  ))}
+                    ))}
                 </ul>
-              </div>
+                </div>
+
+                {/* Improvement Areas */}
+                <div>
+                <h4 className="text-purple-400 mb-3">Strategic Gaps</h4>
+                <ul className="list-disc list-inside text-white/70 text-sm space-y-1">
+                    {result.improvement_areas?.map((s: string, i: number) => (
+                    <li key={i}>{s}</li>
+                    ))}
+                </ul>
+                </div>
+
+                {/* Next Actions */}
+                <div>
+                <h4 className="text-white mb-3">Recommended Next Moves</h4>
+                <ul className="list-disc list-inside text-white/70 text-sm space-y-1">
+                    {result.next_actions?.map((s: string, i: number) => (
+                    <li key={i}>{s}</li>
+                    ))}
+                </ul>
+                </div>
 
             </div>
-          )}
+            )}
 
           {result?.error && (
             <div className="text-red-400">
