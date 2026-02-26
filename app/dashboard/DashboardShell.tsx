@@ -14,12 +14,12 @@ const pathname = usePathname();
 const router = useRouter();
 const supabase = createClient();
 
-  const navItems = [
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Intelligence Studio", href: "/dashboard/studio", special: true },
-    { name: "Cover Letter", href: "/dashboard/cover-letter" },
-    { name: "Interview Prep", href: "/dashboard/interview-prep" },
-  ];
+const navItems = [
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Cortex", href: "/dashboard/cortex", special: true },
+  { name: "Cover Letter", href: "/dashboard/cover-letter" },
+  { name: "Interview Prep", href: "/dashboard/interview-prep" },
+];
 
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -44,21 +44,35 @@ const supabase = createClient();
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`group relative flex items-center justify-between px-4 py-2.5 rounded-lg transition-all duration-300 ${
-                    isActive
-                      ? "bg-white/10 text-white"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
-                  }`}
+                    className={`
+                      group relative flex items-center justify-between px-4 py-2.5 rounded-lg
+                      transition-all duration-300
+                      ${
+                        isActive && isStudio
+                          ? "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-white border border-indigo-400/30 shadow-[0_0_25px_rgba(99,102,241,0.25)]"
+                          : isActive
+                          ? "bg-white/10 text-white"
+                          : "text-white/60 hover:text-white hover:bg-white/5"
+                      }
+                    `}
                 >
                   <span className="text-sm font-medium tracking-wide">
                     {item.name}
                   </span>
-
-                  {isStudio && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full border border-indigo-400/40 text-indigo-300">
-                      AI
-                    </span>
-                  )}
+                    {isStudio && (
+                      <span
+                        className={`
+                          text-[10px] px-2 py-0.5 rounded-full
+                          bg-indigo-500/20 border border-indigo-400/40
+                          text-indigo-300
+                          tracking-wide
+                          transition-all duration-300
+                          ${!isActive ? "opacity-70 group-hover:opacity-100" : ""}
+                        `}
+                      >
+                        AI
+                      </span>
+                    )}
                 </Link>
               );
             })}
