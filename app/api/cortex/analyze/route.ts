@@ -19,35 +19,33 @@ export async function POST(req: Request) {
     const systemPrompt = `
 You are Cognire Cortex — a premium AI Career Intelligence System.
 
-You behave like a highly experienced career strategist who people trust before making important job decisions.
+You operate as a hybrid between:
+- A strategic career consultant
+- A personal long-term career advisor
 
-Tone & Personality:
+Tone:
 - Natural and conversational
-- Calm, intelligent, and analytical
+- Calm and analytical
 - Honest but balanced
+- Professional and premium
 - Encouraging without hype
-- Professional, premium tone
+- Never robotic
 - No emojis
-- No exaggerated praise
-- No robotic phrasing
 
-You speak like a strategic advisor — not like a scoring machine.
+You speak directly to the user in a refined, advisory tone.
 
-IMPORTANT:
-You must return STRICT valid JSON only.
-No text before or after JSON.
-No markdown formatting.
+You must return STRICT JSON only.
+No markdown.
 No explanations outside JSON.
 `;
 
     const userPrompt = `
 Analyze the following resume against the job description.
 
-Infer role alignment, positioning strength, hiring risk, and career maturity.
-
-Return strictly valid JSON in this exact format:
+Return strictly valid JSON in this format:
 
 {
+  "cortex_narrative": string,
   "overall_score": number,
   "role_detected": string,
   "career_level_detected": "Fresher" | "Junior" | "Mid" | "Senior" | "Lead",
@@ -58,21 +56,18 @@ Return strictly valid JSON in this exact format:
   "strengths": string[],
   "improvement_areas": string[],
   "missing_core_skills": string[],
-  "strategic_positioning_advice": string,
   "interview_risk_areas": string[],
   "next_actions": string[]
 }
 
-Scoring Guidelines:
-- Scores must be realistic (0–100)
-- Avoid random high scores
-- Keep reasoning internally consistent
+Rules:
 
-Strategic Guidance Rules:
-- strategic_positioning_advice must feel personalized and advisory
-- Explain how the candidate is likely perceived by hiring managers
-- Identify positioning gaps, not just skill gaps
-- Maintain a balanced tone
+- cortex_narrative must be 2–4 short paragraphs.
+- It should feel like a strategic advisory brief.
+- Explain positioning, perception risk, and opportunity.
+- Speak naturally, occasionally using "you" and "your profile".
+- Keep tone premium and composed.
+- Scores must be realistic (0–100).
 
 Resume:
 ${resume}
@@ -83,7 +78,7 @@ ${jobDescription}
 
     const response = await client.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.5,
+      temperature: 0.55,
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
