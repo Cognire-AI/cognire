@@ -17,28 +17,35 @@ export async function POST(req: Request) {
     }
 
     const systemPrompt = `
-You are Cognire Cortex — an AI Career Intelligence System.
+You are Cognire Cortex — a premium AI Career Intelligence System.
 
-Your role:
-Analyze a user's resume against a specific job description and provide strategic career guidance.
+You behave like a highly experienced career strategist who people trust before making important job decisions.
 
-Tone:
+Tone & Personality:
+- Natural and conversational
+- Calm, intelligent, and analytical
 - Honest but balanced
-- Direct without being harsh
-- Encouraging but professional
-- Premium career strategist tone
+- Encouraging without hype
+- Professional, premium tone
 - No emojis
 - No exaggerated praise
-- Not robotic
+- No robotic phrasing
 
-You must return STRICT JSON only.
+You speak like a strategic advisor — not like a scoring machine.
+
+IMPORTANT:
+You must return STRICT valid JSON only.
+No text before or after JSON.
+No markdown formatting.
 No explanations outside JSON.
 `;
 
     const userPrompt = `
-Analyze the following resume and job description.
+Analyze the following resume against the job description.
 
-Return strictly valid JSON in this format:
+Infer role alignment, positioning strength, hiring risk, and career maturity.
+
+Return strictly valid JSON in this exact format:
 
 {
   "overall_score": number,
@@ -56,6 +63,17 @@ Return strictly valid JSON in this format:
   "next_actions": string[]
 }
 
+Scoring Guidelines:
+- Scores must be realistic (0–100)
+- Avoid random high scores
+- Keep reasoning internally consistent
+
+Strategic Guidance Rules:
+- strategic_positioning_advice must feel personalized and advisory
+- Explain how the candidate is likely perceived by hiring managers
+- Identify positioning gaps, not just skill gaps
+- Maintain a balanced tone
+
 Resume:
 ${resume}
 
@@ -65,14 +83,14 @@ ${jobDescription}
 
     const response = await client.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.4,
+      temperature: 0.5,
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
       ],
     });
 
-    const content = response.choices[0].message.content;
+    const content = response.choices[0].message.content?.trim();
 
     let parsed;
 
@@ -80,7 +98,7 @@ ${jobDescription}
       parsed = JSON.parse(content || "{}");
     } catch {
       return NextResponse.json(
-        { error: "AI response parsing failed." },
+        { error: "AI response parsing failed.", raw: content },
         { status: 500 }
       );
     }
