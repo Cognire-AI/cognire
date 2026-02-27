@@ -80,6 +80,11 @@ Rules:
 - Use "you" and "your".
 - Never refer to the user in third person.
 - Never say the user's name in possessive form.
+- IMPORTANT:
+    All fields must be filled.
+    None can be empty.
+    Allocate content evenly across sections.
+    Keep cortex_narrative under 120 words to preserve space.
 
 Reflective Logic:
 - If overall_score < 75 OR positioning risk is meaningful, include 1–2 sharp reflective lines in "reflective_questions".
@@ -95,7 +100,7 @@ ${jobDescription}
 
     const response = await client.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.6,
+      temperature: 0.7,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: systemPrompt },
