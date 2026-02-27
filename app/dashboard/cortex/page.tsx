@@ -2,35 +2,19 @@
 
 import { useState, useEffect } from "react";
 
-type Step = "resume" | "jd" | "analyzing" | "result";
-
 export default function CortexPage() {
-  const [step, setStep] = useState<Step>("resume");
   const [resume, setResume] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [result, setResult] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   const [visibleSections, setVisibleSections] = useState<string[]>([]);
-  const [thinkingText, setThinkingText] = useState<string>("");
 
-  const thinkingStages = [
-    "Reviewing your experience...",
-    "Mapping alignment signals...",
-    "Evaluating perception risk...",
-    "Constructing advisory brief..."
-  ];
-
-  // ---------- ANALYZE ----------
   async function handleAnalyze() {
     if (!resume || !jobDescription) return;
 
-    setStep("analyzing");
-    setThinkingText(thinkingStages[0]);
-
-    let stageIndex = 0;
-    const stageInterval = setInterval(() => {
-      stageIndex = (stageIndex + 1) % thinkingStages.length;
-      setThinkingText(thinkingStages[stageIndex]);
-    }, 1200);
+    setLoading(true);
+    setResult(null);
+    setVisibleSections([]);
 
     const startTime = Date.now();
 
@@ -42,218 +26,191 @@ export default function CortexPage() {
 
     const data = await response.json();
 
+    // Minimum 3s thinking experience
     const elapsed = Date.now() - startTime;
-    const minimumDuration = 3000;
-
-    if (elapsed < minimumDuration) {
-      await new Promise((r) => setTimeout(r, minimumDuration - elapsed));
+    if (elapsed < 3000) {
+      await new Promise((r) => setTimeout(r, 3000 - elapsed));
     }
 
-    clearInterval(stageInterval);
-
     setResult(data);
-    setStep("result");
+    setLoading(false);
 
-    const sections = ["narrative", "metrics", "strengths", "gaps", "moves"];
+    const sections = ["brief", "metrics", "strengths", "gaps", "moves", "cta"];
+
     sections.forEach((section, index) => {
       setTimeout(() => {
         setVisibleSections((prev) => [...prev, section]);
-      }, index * 1200);
+      }, index * 1100);
     });
   }
 
-  // ---------- Animated Counter ----------
-  function useCountUp(target: number, trigger: boolean) {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-      if (!trigger) return;
-      let start = 0;
-      const duration = 1500;
-      const increment = target / (duration / 16);
-
-      const counter = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-          setCount(target);
-          clearInterval(counter);
-        } else {
-          setCount(Math.floor(start));
-        }
-      }, 16);
-
-      return () => clearInterval(counter);
-    }, [target, trigger]);
-
-    return count;
-  }
-
-  const overall = useCountUp(result?.overall_score || 0, visibleSections.includes("metrics"));
-  const jdMatch = useCountUp(result?.jd_match_score || 0, visibleSections.includes("metrics"));
-
-  // ---------- Doughnut Component ----------
-  function Doughnut({ value }: { value: number }) {
-    const radius = 50;
-    const stroke = 8;
-    const normalizedRadius = radius - stroke * 2;
-    const circumference = normalizedRadius * 2 * Math.PI;
-    const strokeDashoffset = circumference - (value / 100) * circumference;
-
-    return (
-      <svg height={radius * 2} width={radius * 2}>
-        <circle
-          stroke="rgba(255,255,255,0.1)"
-          fill="transparent"
-          strokeWidth={stroke}
-          r={normalizedRadius}
-          cx={radius}
-          cy={radius}
-        />
-        <circle
-          stroke="url(#grad)"
-          fill="transparent"
-          strokeWidth={stroke}
-          strokeDasharray={`${circumference} ${circumference}`}
-          style={{ strokeDashoffset, transition: "stroke-dashoffset 1.5s ease" }}
-          strokeLinecap="round"
-          r={normalizedRadius}
-          cx={radius}
-          cy={radius}
-        />
-        <defs>
-          <linearGradient id="grad">
-            <stop offset="0%" stopColor="#6366f1" />
-            <stop offset="100%" stopColor="#8b5cf6" />
-          </linearGradient>
-        </defs>
-        <text
-          x="50%"
-          y="50%"
-          dominantBaseline="middle"
-          textAnchor="middle"
-          fill="white"
-          fontSize="18"
-          fontWeight="bold"
-        >
-          {value}
-        </text>
-      </svg>
-    );
-  }
-
-  // ---------- STATUS BAR ----------
-  function StatusBar() {
-    const items = [
-      { label: "Resume", active: step !== "resume" },
-      { label: "Job Description", active: step === "jd" || step === "analyzing" || step === "result" },
-      { label: "Cortex Analysis", active: step === "analyzing" || step === "result" },
-    ];
-
-    return (
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex justify-between mb-8">
-        {items.map((item, i) => (
-          <div key={i} className={`text-sm ${item.active ? "text-indigo-400" : "text-white/40"}`}>
-            {item.label}
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div className="relative min-h-screen bg-black text-white px-10 py-10">
+    <div className="relative min-h-screen bg-[#0b0f1a] text-white overflow-hidden">
 
-      <StatusBar />
+      {/* Cosmic Background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[#0b0f1a]" />
+        <div className="absolute -top-[300px] -left-[300px] w-[900px] h-[900px] bg-indigo-600/20 rounded-full blur-[200px]" />
+        <div className="absolute -bottom-[300px] -right-[300px] w-[900px] h-[900px] bg-purple-600/20 rounded-full blur-[200px]" />
+      </div>
 
-      {/* STEP 1 */}
-      {step === "resume" && (
-        <div className="max-w-3xl mx-auto space-y-6">
-          <textarea
-            placeholder="Paste your resume..."
-            value={resume}
-            onChange={(e) => setResume(e.target.value)}
-            className="w-full h-64 bg-white/5 border border-white/10 rounded-xl p-4"
-          />
-          <button
-            onClick={() => setStep("jd")}
-            className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl"
-          >
-            Next — Add Job Description
-          </button>
-        </div>
-      )}
+      <div className="max-w-6xl mx-auto px-6 py-20">
 
-      {/* STEP 2 */}
-      {step === "jd" && (
-        <div className="max-w-3xl mx-auto space-y-6">
-          <textarea
-            placeholder="Paste job description..."
-            value={jobDescription}
-            onChange={(e) => setJobDescription(e.target.value)}
-            className="w-full h-64 bg-white/5 border border-white/10 rounded-xl p-4"
-          />
-          <button
-            onClick={handleAnalyze}
-            className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl"
-          >
-            Analyze with Cortex
-          </button>
-        </div>
-      )}
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent mb-12">
+          Cognire Cortex
+        </h1>
 
-      {/* THINKING OVERLAY */}
-      {step === "analyzing" && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-xl">
-          <div className="text-indigo-400 text-lg animate-pulse">
-            {thinkingText}
+        {/* Input Section */}
+        {!result && (
+          <div className="space-y-6 max-w-2xl">
+            <textarea
+              placeholder="Paste your resume..."
+              value={resume}
+              onChange={(e) => setResume(e.target.value)}
+              className="w-full h-40 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-sm focus:outline-none"
+            />
+
+            <textarea
+              placeholder="Paste job description..."
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
+              className="w-full h-40 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-sm focus:outline-none"
+            />
+
+            <button
+              onClick={handleAnalyze}
+              disabled={loading}
+              className="px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:opacity-90 transition font-medium"
+            >
+              Analyze with Cortex
+            </button>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* RESULT */}
-      {step === "result" && result && (
-        <div className="max-w-5xl mx-auto space-y-12">
-
-          {visibleSections.includes("narrative") && (
-            <div className="bg-white/5 border border-indigo-400/20 rounded-2xl p-8">
-              <h3 className="text-indigo-400 mb-4 uppercase text-sm tracking-wider">
-                Cortex Strategic Brief
-              </h3>
-              <p className="leading-relaxed whitespace-pre-line">
-                {result.cortex_narrative}
-              </p>
+        {/* Thinking Overlay */}
+        {loading && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="text-center animate-pulse text-indigo-400 text-lg">
+              Cortex is constructing your strategic brief...
             </div>
-          )}
+          </div>
+        )}
 
-          {visibleSections.includes("metrics") && (
-            <div className="flex gap-16 justify-center">
-              <Doughnut value={overall} />
-              <Doughnut value={jdMatch} />
-            </div>
-          )}
+        {/* Results */}
+        {result && (
+          <div className="space-y-14">
 
-          {visibleSections.includes("strengths") && (
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-              <h4 className="text-indigo-400 mb-3">Positioning Strengths</h4>
-              <p>{result.positioning_strengths}</p>
-            </div>
-          )}
+            {/* Strategic Brief */}
+            {visibleSections.includes("brief") && (
+              <div className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-[0_0_40px_rgba(99,102,241,0.08)] animate-[fadeUp_0.8s_ease-out]">
+                <h3 className="text-sm uppercase tracking-wider text-indigo-400 mb-6">
+                  Cortex Strategic Brief
+                </h3>
+                <p className="text-white/80 leading-relaxed whitespace-pre-line">
+                  {result.cortex_narrative}
+                </p>
+              </div>
+            )}
 
-          {visibleSections.includes("gaps") && (
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-              <h4 className="text-purple-400 mb-3">Strategic Gaps</h4>
-              <p>{result.strategic_gaps}</p>
-            </div>
-          )}
+            {/* Metrics */}
+            {visibleSections.includes("metrics") && (
+              <div className="grid md:grid-cols-2 gap-12 text-center animate-[fadeUp_0.8s_ease-out]">
 
-          {visibleSections.includes("moves") && (
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-              <h4 className="mb-3">Recommended Next Moves</h4>
-              <p>{result.recommended_next_moves}</p>
-            </div>
-          )}
-        </div>
-      )}
+                <MetricCard
+                  title="Overall Alignment"
+                  value={result.overall_score}
+                  description="Composite score across skill overlap, experience weight and positioning clarity."
+                />
+
+                <MetricCard
+                  title="JD Match"
+                  value={result.jd_match_score}
+                  description="Measures how closely your experience aligns with this specific job description."
+                />
+              </div>
+            )}
+
+            {/* Strengths */}
+            {visibleSections.includes("strengths") && (
+              <SectionCard title="Positioning Strengths">
+                {result.positioning_strengths}
+              </SectionCard>
+            )}
+
+            {/* Gaps */}
+            {visibleSections.includes("gaps") && (
+              <SectionCard title="Strategic Gaps">
+                {result.strategic_gaps}
+              </SectionCard>
+            )}
+
+            {/* Moves */}
+            {visibleSections.includes("moves") && (
+              <SectionCard title="Recommended Next Moves">
+                {result.recommended_next_moves}
+              </SectionCard>
+            )}
+
+            {/* CTA */}
+            {visibleSections.includes("cta") && (
+              <div className="bg-indigo-500/10 border border-indigo-400/30 rounded-2xl p-8 animate-[fadeUp_0.8s_ease-out]">
+                <h4 className="text-lg font-semibold mb-4">
+                  What would you like to do next?
+                </h4>
+
+                <p className="text-white/70 mb-6">
+                  I can generate an optimized version of your resume aligned to this job, 
+                  or simulate the interview panel's likely questions.
+                </p>
+
+                <div className="flex gap-4 flex-wrap">
+                  <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:opacity-90 transition">
+                    Generate Optimized Resume (Free)
+                  </button>
+
+                  <button className="px-6 py-3 rounded-xl border border-indigo-400/40 hover:bg-indigo-500/10 transition">
+                    Unlock Full Strategy (Pro)
+                  </button>
+                </div>
+              </div>
+            )}
+
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- COMPONENTS ---------- */
+
+function SectionCard({ title, children }: any) {
+  return (
+    <div className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-[0_0_40px_rgba(99,102,241,0.08)] animate-[fadeUp_0.8s_ease-out]">
+      <h3 className="text-indigo-400 mb-6">{title}</h3>
+      <p className="text-white/80 leading-relaxed whitespace-pre-line">
+        {children}
+      </p>
+    </div>
+  );
+}
+
+function MetricCard({ title, value, description }: any) {
+  return (
+    <div className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-[0_0_40px_rgba(99,102,241,0.08)] group relative">
+
+      <div className="text-4xl font-bold text-indigo-400 mb-4">
+        {value}
+      </div>
+
+      <div className="text-sm text-white/80 font-medium mb-2">
+        {title}
+      </div>
+
+      <div className="text-xs text-white/40">
+        {description}
+      </div>
+
     </div>
   );
 }
