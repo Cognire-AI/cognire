@@ -10,7 +10,6 @@ export default function ClientLayout({
 }) {
   const pathname = usePathname();
 
-  // Collapse sidebar automatically for Cortex
   const collapseSidebar = pathname.includes("/dashboard/cortex");
 
   return (

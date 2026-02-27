@@ -34,7 +34,7 @@ export default function DashboardShell({
       {/* SIDEBAR */}
       <aside
         className={`
-          ${collapseSidebar ? "w-16" : "w-64"}
+          ${collapseSidebar ? "w-20" : "w-64"}
           transition-all duration-500 ease-in-out
           border-r border-white/10
           bg-white/5 backdrop-blur-xl

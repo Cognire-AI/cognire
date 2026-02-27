@@ -1,7 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import DashboardShell from "./DashboardShell";
 import ClientLayout from "./ClientLayout";
 
 export default async function DashboardLayout({
@@ -37,5 +36,5 @@ export default async function DashboardLayout({
     redirect("/auth/login");
   }
 
-  return <DashboardShell>{children}</DashboardShell>;
+  return <ClientLayout>{children}</ClientLayout>;
 }
