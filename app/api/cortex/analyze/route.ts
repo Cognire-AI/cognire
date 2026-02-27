@@ -63,7 +63,7 @@ Return strictly valid JSON in this exact format:
 Rules:
 
 - Scores must be realistic (0–100).
-- cortex_narrative must be 2–3 sharp strategic paragraphs (max 180 words).
+- cortex_narrative must be concise (max 140 words).
 - Write in natural flowing advisory language.
 - Do NOT use bullet points.
 - Do NOT use numbering.
@@ -72,11 +72,19 @@ Rules:
 - recommended_next_moves must be actionable and strategic.
 - Evaluate how a hiring manager is likely to perceive the candidate.
 - Identify positioning risk, not just missing skills.
+- positioning_strengths must not be empty.
+- strategic_gaps must not be empty.
+- recommended_next_moves must not be empty.
+- Each must contain meaningful advisory content.
+- You must ALWAYS speak in second person.
+- Use "you" and "your".
+- Never refer to the user in third person.
+- Never say the user's name in possessive form.
 
 Reflective Logic:
 - If overall_score < 75 OR positioning risk is meaningful, include 1–2 sharp reflective lines in "reflective_questions".
 - If alignment is strong and risk is low, set "reflective_questions" to null.
-- Reflective questions should provoke strategic thinking, not emotional doubt.
+- Reflective questions must be written in second person and feel like a strategic pause in conversation.
 
 Resume:
 ${resume}
