@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 function useCountUp(target: number, trigger: boolean) {
   const [count, setCount] = useState(0);
   const [glow, setGlow] = useState(false);
+  const [step, setStep] = useState<"resume" | "jd" | "thinking" | "result">("resume");
 
   useEffect(() => {
     if (!trigger) return;
