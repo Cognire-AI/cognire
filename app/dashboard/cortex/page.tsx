@@ -45,21 +45,40 @@ export default function CortexPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#050816]">
+      <div className="relative min-h-screen overflow-hidden bg-[#060B1A]">
 
-      {/* Cosmic Background */}
-      <div className="fixed inset-0 -z-20 bg-[#050816]" />
+        {/* Cosmic Background */}
+        <div className="fixed inset-0 -z-30 bg-gradient-to-br 
+          from-[#0B1026] via-[#0A0F1F] to-[#050816]" />
 
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-[-200px] left-[-200px] w-[700px] h-[700px] bg-indigo-600/20 rounded-full blur-[180px]" />
-        <div className="absolute bottom-[-250px] right-[-250px] w-[800px] h-[800px] bg-purple-600/20 rounded-full blur-[200px]" />
-      </div>
+        {/* Nebula Glow Top */}
+        <div className="fixed -top-40 -left-40 w-[800px] h-[800px] 
+          bg-purple-700/20 rounded-full blur-[200px] -z-20" />
 
-      <div className="max-w-6xl mx-auto px-6 py-20">
+        {/* Nebula Glow Bottom */}
+        <div className="fixed -bottom-60 -right-40 w-[900px] h-[900px] 
+          bg-indigo-600/20 rounded-full blur-[220px] -z-20" />
 
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-300 to-purple-400 bg-clip-text text-transparent mb-12">
-          Cognire Cortex
-        </h1>
+        {/* Subtle center glow */}
+        <div className="fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08),transparent_60%)] -z-10" />
+
+            <div className="relative max-w-5xl mx-auto px-8 py-24">
+              <div className="relative backdrop-blur-xl bg-white/5 
+                border border-white/10 rounded-3xl 
+                shadow-[0_0_80px_rgba(99,102,241,0.08)] 
+                p-12">
+
+          <div className="mb-12">
+            <h1 className="text-5xl font-semibold tracking-tight 
+              bg-gradient-to-r from-indigo-300 to-purple-400 
+              bg-clip-text text-transparent">
+              Cognire Cortex
+            </h1>
+
+            <p className="text-white/50 mt-3 text-lg">
+              Strategic Career Intelligence Briefing
+            </p>
+          </div>
 
         {/* INPUT SECTION */}
         {!result && (
@@ -108,22 +127,23 @@ export default function CortexPage() {
               </SectionCard>
             )}
 
-            {/* METRICS */}
-            {visibleSections.includes("metrics") && (
-              <div className="grid md:grid-cols-2 gap-12 justify-items-center">
-                <MetricRing
-                  value={result.overall_score}
-                  label="Overall Alignment"
-                  description="Composite score across skill overlap and positioning clarity."
-                />
+              {visibleSections.includes("metrics") && (
+                <div className="grid md:grid-cols-2 gap-12 mt-6">
 
-                <MetricRing
-                  value={result.jd_match_score}
-                  label="JD Match"
-                  description="Measures alignment with this specific job description."
-                />
-              </div>
-            )}
+                  <MetricRing
+                    label="Overall Alignment"
+                    value={result.overall_score}
+                    description="Strong operational match, strategic repositioning required."
+                  />
+
+                  <MetricRing
+                    label="JD Match"
+                    value={result.jd_match_score}
+                    description="Experience overlap present but gaps in presales expertise."
+                  />
+
+                </div>
+              )}
 
             {visibleSections.includes("strengths") && (
               <SectionCard title="Positioning Strengths">
@@ -144,24 +164,41 @@ export default function CortexPage() {
             )}
 
             {visibleSections.includes("cta") && (
-              <div className="bg-indigo-500/10 border border-indigo-400/30 rounded-2xl p-10 backdrop-blur-xl">
-                <h4 className="text-xl font-semibold mb-4 text-white">
-                  What would you like to do next?
-                </h4>
+              <div className="mt-16 p-10 rounded-2xl 
+                bg-gradient-to-br from-indigo-500/10 to-purple-500/10
+                border border-indigo-400/30">
 
-                <p className="text-white/70 mb-8 max-w-2xl">
-                  Based on the gaps identified, your strongest leverage right now is to refine your positioning and prepare for targeted interviews.
+                <h3 className="text-2xl font-semibold mb-4">
+                  This role is within reach — but not in its current form.
+                </h3>
+
+                <p className="text-white/70 mb-8 text-lg">
+                  I can rebuild your resume specifically for this role and
+                  generate the exact interview pressure points you'll face.
                 </p>
 
-                <div className="flex gap-4 flex-wrap">
-                  <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:opacity-90 transition">
-                    Generate Optimized Resume (Free)
+                <div className="flex gap-6 flex-wrap">
+
+                  <button className="px-8 py-4 rounded-xl 
+                    bg-gradient-to-r from-indigo-500 to-purple-600 
+                    text-white font-medium hover:scale-105 transition">
+                    Rebuild Resume For This Role (Free)
                   </button>
 
-                  <button className="px-6 py-3 rounded-xl border border-indigo-400/40 hover:bg-indigo-500/10 transition">
-                    Unlock Full Strategy (Pro)
+                  <button className="px-8 py-4 rounded-xl 
+                    border border-indigo-400/40 
+                    hover:bg-indigo-500/10 transition">
+                    Unlock Hiring Manager Strategy (Pro)
                   </button>
+
                 </div>
+
+                <div className="mt-8 text-white/40 text-sm flex gap-8 flex-wrap">
+                  <span>✓ Interview question simulation</span>
+                  <span>✓ Hidden rejection triggers</span>
+                  <span>✓ Salary positioning insights</span>
+                </div>
+
               </div>
             )}
 
@@ -169,6 +206,7 @@ export default function CortexPage() {
         )}
       </div>
     </div>
+   </div>
   );
 }
 
