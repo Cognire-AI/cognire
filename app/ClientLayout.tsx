@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import DashboardShell from "./DashboardShell";
+import DashboardShell from "./dashboard/DashboardShell";
 
 export default function ClientLayout({
   children,
