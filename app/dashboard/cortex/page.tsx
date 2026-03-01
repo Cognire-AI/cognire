@@ -47,20 +47,6 @@ export default function CortexPage() {
   return (
     <div className="relative min-h-screen overflow-hidden text-white">
 
-      {/* ===== COSMIC BACKGROUND ===== */}
-
-      {/* Base gradient */}
-      <div className="fixed inset-0 bg-gradient-to-br from-[#0A0F25] via-[#070B1A] to-[#050816] -z-40" />
-
-      {/* Nebula glow 1 */}
-      <div className="fixed -top-60 -left-60 w-[1000px] h-[1000px] bg-indigo-600/30 rounded-full blur-[250px] -z-30" />
-
-      {/* Nebula glow 2 */}
-      <div className="fixed -bottom-60 -right-60 w-[1100px] h-[1100px] bg-purple-600/30 rounded-full blur-[260px] -z-30" />
-
-      {/* Center subtle highlight */}
-      <div className="fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08),transparent_60%)] -z-20" />
-
       {/* ===== CONTENT ===== */}
 
       <div className="relative z-10 max-w-5xl mx-auto px-12 py-28">
