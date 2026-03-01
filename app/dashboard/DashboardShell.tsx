@@ -29,7 +29,7 @@ export default function DashboardShell({
   }
 
   return (
-    <div className="flex min-h-screen text-white bg-[#070B1A] relative overflow-hidden">
+    <div className="flex min-h-screen text-white">
 
       {/* Cosmic Background Glow */}
       <div className="fixed inset-0 -z-20 bg-[#070B1A]" />
@@ -41,16 +41,17 @@ export default function DashboardShell({
       </div>
 
       {/* SIDEBAR */}
-      <aside
-        className={`
-          ${collapseSidebar ? "w-[72px]" : "w-64"}
-          transition-all duration-500 ease-in-out
-          border-r border-white/10
-          bg-[#0B1026]/80 backdrop-blur-xl
-          p-4 flex flex-col justify-between
-        `}
-      >
-        <div>
+        <aside
+          className={`
+            ${collapseSidebar ? "w-20" : "w-64"}
+            transition-all duration-500 ease-in-out
+            backdrop-blur-xl
+            bg-white/5
+            border-r border-white/10
+            p-6 flex flex-col justify-between
+          `}
+        >
+                <div>
           {!collapseSidebar && (
             <h2 className="text-lg font-semibold tracking-wide mb-8 text-white/90">
               Cognire
@@ -103,7 +104,7 @@ export default function DashboardShell({
       </aside>
 
       {/* MAIN */}
-      <main className="flex-1 p-12 transition-all duration-500">
+      <main className="flex-1 transition-all duration-500">
         <div className="max-w-6xl mx-auto">
           {children}
         </div>

@@ -45,53 +45,64 @@ export default function CortexPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#060B1A]">
+    <div className="relative min-h-screen overflow-hidden text-white">
 
-      {/* Cosmic Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-[#0B1026] via-[#0A0F1F] to-[#050816] -z-30" />
-      <div className="fixed -top-40 -left-40 w-[800px] h-[800px] bg-purple-700/20 rounded-full blur-[200px] -z-20" />
-      <div className="fixed -bottom-60 -right-40 w-[900px] h-[900px] bg-indigo-600/20 rounded-full blur-[220px] -z-20" />
+      {/* ===== COSMIC BACKGROUND ===== */}
 
-      <div className="relative max-w-5xl mx-auto px-8 py-24">
+      {/* Base gradient */}
+      <div className="fixed inset-0 bg-gradient-to-br from-[#0A0F25] via-[#070B1A] to-[#050816] -z-40" />
 
-        {/* Header */}
-        <div className="mb-16">
-          <h1 className="text-5xl font-semibold bg-gradient-to-r from-indigo-300 to-purple-400 bg-clip-text text-transparent">
+      {/* Nebula glow 1 */}
+      <div className="fixed -top-60 -left-60 w-[1000px] h-[1000px] bg-indigo-600/30 rounded-full blur-[250px] -z-30" />
+
+      {/* Nebula glow 2 */}
+      <div className="fixed -bottom-60 -right-60 w-[1100px] h-[1100px] bg-purple-600/30 rounded-full blur-[260px] -z-30" />
+
+      {/* Center subtle highlight */}
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08),transparent_60%)] -z-20" />
+
+      {/* ===== CONTENT ===== */}
+
+      <div className="relative z-10 max-w-5xl mx-auto px-12 py-28">
+
+        {/* HEADER */}
+        <div className="mb-20">
+          <h1 className="text-6xl font-semibold tracking-tight bg-gradient-to-r from-indigo-300 to-purple-400 bg-clip-text text-transparent">
             Cognire Cortex
           </h1>
-          <p className="text-white/50 mt-3 text-lg">
+          <p className="text-white/50 mt-4 text-lg">
             Strategic Career Intelligence Briefing
           </p>
         </div>
 
-        {/* INPUT */}
+        {/* INPUT SECTION */}
         {!result && (
-          <div className="space-y-6 max-w-3xl">
+          <div className="space-y-8 max-w-3xl">
             <textarea
               placeholder="Paste your resume..."
               value={resume}
               onChange={(e) => setResume(e.target.value)}
-              className="w-full h-44 bg-[#0B1026]/80 border border-white/10 rounded-2xl p-6 text-white/80"
+              className="w-full h-48 bg-[#0B1026]/70 border border-white/10 rounded-2xl p-6 text-white/80 backdrop-blur-xl focus:outline-none focus:border-indigo-400/40"
             />
 
             <textarea
               placeholder="Paste job description..."
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
-              className="w-full h-44 bg-[#0B1026]/80 border border-white/10 rounded-2xl p-6 text-white/80"
+              className="w-full h-48 bg-[#0B1026]/70 border border-white/10 rounded-2xl p-6 text-white/80 backdrop-blur-xl focus:outline-none focus:border-indigo-400/40"
             />
 
             <button
               onClick={handleAnalyze}
               disabled={loading}
-              className="px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-medium"
+              className="px-10 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition font-medium"
             >
               Analyze with Cortex
             </button>
           </div>
         )}
 
-        {/* THINKING */}
+        {/* THINKING OVERLAY */}
         {loading && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="text-indigo-300 text-lg animate-pulse">
@@ -102,9 +113,9 @@ export default function CortexPage() {
 
         {/* RESULTS */}
         {result && (
-          <div className="space-y-16">
+          <div className="space-y-20">
 
-            {/* BRIEF */}
+            {/* STRATEGIC BRIEF */}
             {visibleSections.includes("brief") && (
               <SectionCard title="Cortex Strategic Brief">
                 {result.cortex_narrative}
@@ -113,20 +124,17 @@ export default function CortexPage() {
 
             {/* METRICS */}
             {visibleSections.includes("metrics") && (
-              <div className="grid md:grid-cols-2 gap-12">
-
+              <div className="grid md:grid-cols-2 gap-16">
                 <MetricRing
                   label="Overall Alignment"
                   value={result.overall_score}
-                  description="Composite score across experience and positioning."
+                  description="Composite score across experience weight and positioning clarity."
                 />
-
                 <MetricRing
                   label="JD Match"
                   value={result.jd_match_score}
-                  description="Measures alignment with this job description."
+                  description="Measures alignment with this specific job description."
                 />
-
               </div>
             )}
 
@@ -153,22 +161,21 @@ export default function CortexPage() {
 
             {/* CTA */}
             {visibleSections.includes("cta") && (
-              <div className="p-10 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-400/30">
-                <h3 className="text-2xl font-semibold mb-4">
+              <div className="p-12 rounded-3xl bg-gradient-to-br from-indigo-500/15 to-purple-500/15 border border-indigo-400/30 backdrop-blur-xl shadow-[0_0_60px_rgba(99,102,241,0.12)]">
+                <h3 className="text-3xl font-semibold mb-6">
                   This role is within reach — but not in its current form.
                 </h3>
 
-                <p className="text-white/70 mb-8 text-lg">
-                  I can rebuild your resume specifically for this role and
-                  simulate the exact interview pressure points you'll face.
+                <p className="text-white/70 mb-10 text-lg">
+                  I can rebuild your resume specifically for this role and generate the exact interview pressure points you'll face.
                 </p>
 
                 <div className="flex gap-6 flex-wrap">
-                  <button className="px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition">
+                  <button className="px-10 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition font-medium">
                     Rebuild Resume For This Role (Free)
                   </button>
 
-                  <button className="px-8 py-4 rounded-xl border border-indigo-400/40 hover:bg-indigo-500/10 transition">
+                  <button className="px-10 py-4 rounded-xl border border-indigo-400/40 hover:bg-indigo-500/10 transition">
                     Unlock Hiring Manager Strategy (Pro)
                   </button>
                 </div>
@@ -177,7 +184,6 @@ export default function CortexPage() {
 
           </div>
         )}
-
       </div>
     </div>
   );
@@ -187,8 +193,8 @@ export default function CortexPage() {
 
 function SectionCard({ title, children }: any) {
   return (
-    <div className="bg-[#0B1026]/80 border border-white/10 rounded-3xl p-10 backdrop-blur-xl shadow-[0_0_60px_rgba(99,102,241,0.12)]">
-      <h3 className="text-sm uppercase tracking-wider text-indigo-300 mb-6">
+    <div className="bg-[#0B1026]/70 border border-white/10 rounded-3xl p-12 backdrop-blur-xl shadow-[0_0_60px_rgba(99,102,241,0.12)]">
+      <h3 className="text-sm uppercase tracking-wider text-indigo-300 mb-8">
         {title}
       </h3>
       <p className="text-white/85 leading-relaxed whitespace-pre-line text-lg">
