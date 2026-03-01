@@ -46,14 +46,14 @@ export default function DashboardShell({
             ${collapseSidebar ? "w-20" : "w-64"}
             transition-all duration-500 ease-in-out
             backdrop-blur-xl
-            bg-white/5
+            bg-black/30 backdrop-blur-2xl border-r border-white/10
             border-r border-white/10
             p-6 flex flex-col justify-between
           `}
         >
                 <div>
           {!collapseSidebar && (
-            <h2 className="text-lg font-semibold tracking-wide mb-8 text-white/90">
+            <h2 className="text-lg font-semibold tracking-wide mb-8 text-white/80">
               Cognire
             </h2>
           )}

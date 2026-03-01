@@ -53,7 +53,7 @@ export default function CortexPage() {
 
         {/* HEADER */}
         <div className="mb-20">
-          <h1 className="text-6xl font-semibold tracking-tight bg-gradient-to-r from-indigo-300 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-6xl font-semibold tracking-tight bg-clip-text text-transparent">
             Cognire Cortex
           </h1>
           <p className="text-white/50 mt-4 text-lg">
@@ -68,20 +68,20 @@ export default function CortexPage() {
               placeholder="Paste your resume..."
               value={resume}
               onChange={(e) => setResume(e.target.value)}
-              className="w-full h-48 bg-[#0B1026]/70 border border-white/10 rounded-2xl p-6 text-white/80 backdrop-blur-xl focus:outline-none focus:border-indigo-400/40"
+              className="w-full h-48 border-white/10 rounded-2xl p-6 text-white/80 backdrop-blur-xl focus:outline-none focus:border-indigo-400/40"
             />
 
             <textarea
               placeholder="Paste job description..."
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
-              className="w-full h-48 bg-[#0B1026]/70 border border-white/10 rounded-2xl p-6 text-white/80 backdrop-blur-xl focus:outline-none focus:border-indigo-400/40"
+              className="w-full h-48 border-white/10 rounded-2xl p-6 text-white/80 backdrop-blur-xl focus:outline-none focus:border-indigo-400/40"
             />
 
             <button
               onClick={handleAnalyze}
               disabled={loading}
-              className="px-10 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition font-medium"
+              className="px-10 py-4 rounded-xl hover:scale-105 transition font-medium"
             >
               Analyze with Cortex
             </button>
@@ -90,7 +90,7 @@ export default function CortexPage() {
 
         {/* THINKING OVERLAY */}
         {loading && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="text-indigo-300 text-lg animate-pulse">
               Cortex is constructing your strategic brief...
             </div>
@@ -147,7 +147,7 @@ export default function CortexPage() {
 
             {/* CTA */}
             {visibleSections.includes("cta") && (
-              <div className="p-12 rounded-3xl bg-gradient-to-br from-indigo-500/15 to-purple-500/15 border border-indigo-400/30 backdrop-blur-xl shadow-[0_0_60px_rgba(99,102,241,0.12)]">
+              <div className="p-12 rounded-3xl border-indigo-400/30 backdrop-blur-xl shadow-[0_0_60px_rgba(99,102,241,0.12)]">
                 <h3 className="text-3xl font-semibold mb-6">
                   This role is within reach — but not in its current form.
                 </h3>
@@ -157,11 +157,11 @@ export default function CortexPage() {
                 </p>
 
                 <div className="flex gap-6 flex-wrap">
-                  <button className="px-10 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:scale-105 transition font-medium">
+                  <button className="px-10 py-4 rounded-xl hover:scale-105 transition font-medium">
                     Rebuild Resume For This Role (Free)
                   </button>
 
-                  <button className="px-10 py-4 rounded-xl border border-indigo-400/40 hover:bg-indigo-500/10 transition">
+                  <button className="px-10 py-4 rounded-xl border border-indigo-400/40 hover: transition">
                     Unlock Hiring Manager Strategy (Pro)
                   </button>
                 </div>
@@ -179,7 +179,7 @@ export default function CortexPage() {
 
 function SectionCard({ title, children }: any) {
   return (
-    <div className="bg-[#0B1026]/70 border border-white/10 rounded-3xl p-12 backdrop-blur-xl shadow-[0_0_60px_rgba(99,102,241,0.12)]">
+    <div className="border-white/10 rounded-3xl p-12 backdrop-blur-xl shadow-[0_0_60px_rgba(99,102,241,0.12)]">
       <h3 className="text-sm uppercase tracking-wider text-indigo-300 mb-8">
         {title}
       </h3>
