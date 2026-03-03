@@ -31,29 +31,20 @@ export default function DashboardShell({
   return (
     <div className="flex min-h-screen text-white">
 
-      {/* Cosmic Background Glow */}
-      <div className="fixed inset-0 -z-20 bg-[#070B1A]" />
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <div className="absolute top-[-250px] left-[-200px] w-[800px] h-[800px] 
-          bg-indigo-600/20 rounded-full blur-[200px]" />
-        <div className="absolute bottom-[-250px] right-[-200px] w-[900px] h-[900px] 
-          bg-purple-600/20 rounded-full blur-[220px]" />
-      </div>
-
       {/* SIDEBAR */}
-        <aside
-          className={`
-            ${collapseSidebar ? "w-20" : "w-64"}
-            transition-all duration-500 ease-in-out
-            backdrop-blur-xl
-            bg-black/30 backdrop-blur-2xl border-r border-white/10
-            border-r border-white/10
-            p-6 flex flex-col justify-between
-          `}
-        >
-                <div>
+      <aside
+        className={`
+          ${collapseSidebar ? "w-20" : "w-64"}
+          transition-all duration-500 ease-in-out
+          bg-white/[0.03]
+          backdrop-blur-2xl
+          border-r border-white/10
+          p-6 flex flex-col justify-between
+        `}
+      >
+        <div>
           {!collapseSidebar && (
-            <h2 className="text-lg font-semibold tracking-wide mb-8 text-white/80">
+            <h2 className="text-lg font-semibold tracking-wide mb-10 text-white/80">
               Cognire
             </h2>
           )}
@@ -69,11 +60,13 @@ export default function DashboardShell({
                   href={item.href}
                   className={`
                     flex items-center justify-between
-                    px-3 py-2 rounded-lg
+                    px-4 py-2 rounded-xl
                     transition-all duration-300
-                    ${isActive
-                      ? "bg-indigo-500/20 text-white border border-indigo-400/30"
-                      : "text-white/60 hover:text-white hover:bg-white/5"}
+                    ${
+                      isActive
+                        ? "bg-white/10 border border-white/20 text-white"
+                        : "text-white/60 hover:text-white hover:bg-white/5"
+                    }
                   `}
                 >
                   {!collapseSidebar && (
@@ -96,16 +89,16 @@ export default function DashboardShell({
         {!collapseSidebar && (
           <button
             onClick={handleLogout}
-            className="mt-10 px-4 py-2 rounded-lg bg-red-600/80 hover:bg-red-600 text-sm font-medium transition"
+            className="mt-10 px-4 py-2 rounded-xl bg-red-600/80 hover:bg-red-600 text-sm font-medium transition"
           >
             Logout
           </button>
         )}
       </aside>
 
-      {/* MAIN */}
-      <main className="flex-1 transition-all duration-500">
-        <div className="max-w-6xl mx-auto">
+      {/* MAIN CONTENT */}
+      <main className="flex-1">
+        <div className="max-w-6xl mx-auto px-12 py-20">
           {children}
         </div>
       </main>
