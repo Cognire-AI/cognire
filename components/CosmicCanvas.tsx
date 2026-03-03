@@ -25,9 +25,8 @@ export default function CosmicCanvas() {
       />
 
       {/* Center AI light core */}
-      <div className="absolute inset-0 
-        bg-[radial-gradient(circle_at_50%_35%,rgba(99,102,241,0.18),transparent_60%)]" 
-      />
+      <div className="absolute -bottom-80 -right-72 w-[1300px] h-[1300px] 
+        bg-purple-700/30 rounded-full blur-[280px] animate-pulse-slow" />
 
       {/* Subtle vignette for depth */}
       <div className="absolute inset-0 
