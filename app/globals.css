@@ -66,3 +66,13 @@ body {
     transform: translateY(0);
   }
 }
+.cosmic-glass {
+  background: rgba(20, 25, 55, 0.45);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 40px rgba(99, 102, 241, 0.08),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+  border-radius: 24px;
+}
